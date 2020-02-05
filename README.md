@@ -48,14 +48,14 @@ Options:
 **Tail content plot**  
 y-axis: Number of reads  
 x-axis: Length of poly-N tail  
-![Example tail content plot](github.com/swandro/seq_tail_analysis/blob/master/images/Example_tails.png)  
+![Example tail content plot](images/Example_tails.png)  
 ___
 **Total base content plot**  
 y-axis: Number of reads  
 x-axis: Total # of N in the read  
-![Example total base content plot](github.com/swandro/seq_tail_analysis/blob/master/images/Example_total_base_content.png)
+![Example total base content plot](images/Example_total_base_content.png)
 ___
 **Base content by position plot**  
 y-axis: % of reads  
 x-axis: Base position in read
-![Example base content by position plot](github.com/swandro/seq_tail_analysis/blob/master/images/Example_content_by_position.png)
+![Example base content by position plot](images/Example_content_by_position.png)
