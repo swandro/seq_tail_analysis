@@ -50,7 +50,6 @@ def analyze_sequence(seq, D_tail, D_content, D_bpb):
     #Set up dictionaries
     tail_D = {}
     sequence_conent_D = {"A":0, "T":0, "C":0, "G":0}
-    content_by_position_D = {"A":defaultdict(int),"T":defaultdict(int),"C":defaultdict(int),"G":defaultdict(int)}
     #Get sequence info
     seq_len = len(seq)
     reverse_seq = seq[::-1]
