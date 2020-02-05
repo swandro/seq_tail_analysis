@@ -7,12 +7,13 @@ Analyse base content of fastq files.
 - pandas
 
 **Input**: txt file list of sequence files to analyze. One file per line.  
-**Output**: .tsv file
+**Output**: Single .tsv file with stats of analyzed reads.  
+**Output columns explanation:**
 - position: index column that all other columns refer to
 - A_tail_sequences: Number of reads with poly-A tail of length "position"
 - A_total_sequences: Number of reads with "position" total As.
 - A_pct_content: Portion of reads with A at "position" in the read  
-
+- Same columns for G, T, C  
 #### Example row:
 position | A_tail_sequences | A_total_sequences | A_pct_content
 --- | --- | --- | ---
@@ -47,14 +48,14 @@ Options:
 **Tail content plot**  
 y-axis: Number of reads  
 x-axis: Length of poly-N tail  
-![Example tail content plot](github.com/swandro/seq_tail_analysis/images/Example_tails.png)  
+![Example tail content plot](github.com/swandro/seq_tail_analysis/blob/master/images/Example_tails.png)  
 ___
 **Total base content plot**  
 y-axis: Number of reads  
 x-axis: Total # of N in the read  
-![Example total base content plot](github.com/swandro/seq_tail_analysis/images/Example_total_base_content.png)
+![Example total base content plot](github.com/swandro/seq_tail_analysis/blob/master/images/Example_total_base_content.png)
 ___
 **Base content by position plot**  
 y-axis: % of reads  
 x-axis: Base position in read
-![Example base content by position plot](github.com/swandro/seq_tail_analysis/images/Example_content_by_position.png)
+![Example base content by position plot](github.com/swandro/seq_tail_analysis/blob/master/images/Example_content_by_position.png)
