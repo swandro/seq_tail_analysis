@@ -9,7 +9,7 @@ Options:
   -o, --output TEXT  Output: Name of output tsv file.  [required]
   --help             Show this message and exit.
   ```
-### Dependencies
+### Required packages
 - [Bio](https://biopython.org/wiki/Download)
 - [click](https://pypi.org/project/click/)
 - gzip
@@ -42,7 +42,7 @@ position | A_tail_sequences | A_total_sequences | A_pct_content
 
 **Plot_sequence_analysis.ipynb** Jupyter notebook is included to help visualizing results.
 
-### Dependencies
+### Required packages
 - [plotnine](https://plotnine.readthedocs.io/en/stable/installation.html)
 - pandas
 
