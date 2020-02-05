@@ -74,7 +74,12 @@ def analyze_sequence(seq, D_tail, D_content, D_bpb):
         D_bpb[base][position] += 1
     #Modify output dictionaries
     if tail_base in "ATCG":
+        #Add one count to for the tail length.
         D_tail[tail_base][tail_len] += 1
+        #Add one count to tail length 0 for all the non-tail bases
+        other_bases = "ATCG".replace(tail_base,"")
+        for b in other_bases:
+            D_tail[b][0] += 1
     for base,base_count in sequence_conent_D.items():
         D_content[base][base_count] += 1
     return(None)
