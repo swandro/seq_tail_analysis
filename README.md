@@ -58,5 +58,5 @@ x-axis: Total # of N in the read
 ___
 **Base content by position plot**  
 y-axis: % of reads  
-x-axis: Base position in read
+x-axis: Base position in read  
 ![Example base content by position plot](images/Example_content_by_position.png)
