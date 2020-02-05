@@ -3,7 +3,6 @@ from Bio import Seq,SeqIO
 import gzip
 from collections import defaultdict
 import pandas as pd
-import plotnine as pn
 import click
 
 def create_empty_dicts():
