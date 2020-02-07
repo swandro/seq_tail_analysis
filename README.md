@@ -4,9 +4,10 @@ Analyse base content of fastq files.
 Usage: python seq_analyzer.py [OPTIONS]
 
 Options:
-  -i, --input TEXT   Input: Text file list of input fastq files. 1 file per
+  -i, --input TEXT Input: Text file list of input fastq files. 1 file per
                      line.  [required]
   -o, --output TEXT  Output: Name of output tsv file.  [required]
+  -m, --max_reads INTEGER  Max number of reads to analyze per file. [optional]
   --help             Show this message and exit.
   ```
 ### Required packages

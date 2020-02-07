@@ -11,26 +11,30 @@ def create_empty_dicts():
     D_bpb = {"A":defaultdict(int),"T":defaultdict(int),"C":defaultdict(int),"G":defaultdict(int)}
     return((D_tail,D_content,D_bpb))
 
-def process_files(file_list, D_tail, D_content, D_bpb):
+def process_files(file_list, D_tail, D_content, D_bpb, max_reads):
     '''Iterate theough the given fastq files and adds the information to the given dictionaries'''
-    def process_open_fastq(openfile, D_tail, D_content, D_bpb):
+    def process_open_fastq(openfile, D_tail, D_content, D_bpb, max_reads):
+        i=0
         line= openfile.readline()
         while line:
             if line[0] == "@":
                 seq= openfile.readline().strip()
                 analyze_sequence(seq, D_tail, D_content, D_bpb)
+                i += 1
                 #Skip + line and quality line
                 openfile.readline()
                 openfile.readline()
             line = openfile.readline()
+            if max_reads and i >= max_reads:
+                break
     for file in file_list:
         extension = file.split('.')[-1]
         if extension == "gz":
             with gzip.open(file, "rt") as openfile:
-                process_open_fastq(openfile, D_tail, D_content, D_bpb)
+                process_open_fastq(openfile, D_tail, D_content, D_bpb, max_reads)
         else:
             with open(file, "r") as openfile:
-                process_open_fastq(openfile, D_tail, D_content, D_bpb)
+                process_open_fastq(openfile, D_tail, D_content, D_bpb, max_reads)
     return(None)
 
 def dict_to_df(D_tail:dict, D_content:dict, D_bpb_compositional:dict):
@@ -102,14 +106,15 @@ def normalize_per_position_base_columns(df):
 @click.command()
 @click.option('-i',"--input", required=True, help="Input: Text file list of input fastq files. 1 file per line.")
 @click.option('-o',"--output", required=True, help='Output: Name of output tsv file.')
+@click.option('-m',"--max_reads", required=False, default=False, show_default=False, type=int, help='Max number of reads to analyze per file.')
 
-def seq_analysis(input, output):
+def seq_analysis(input, output, max_reads):
     #Get file list
     file_list = [line.strip() for line in open(input,'r')]
     #Make empty dictionaries
     D_tail, D_content, D_bpb = create_empty_dicts()
     #Process sequences
-    process_files(file_list, D_tail, D_content, D_bpb)
+    process_files(file_list, D_tail, D_content, D_bpb, max_reads)
     #Make dataframe from dictionaries
     output_dataframe = dict_to_df(D_tail, D_content, D_bpb)
     #Normalize the base content by position columns
