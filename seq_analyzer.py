@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-from Bio import Seq,SeqIO
 import gzip
 from collections import defaultdict
 import pandas as pd
