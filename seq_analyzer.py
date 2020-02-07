@@ -12,18 +12,26 @@ def create_empty_dicts():
     D_bpb = {"A":defaultdict(int),"T":defaultdict(int),"C":defaultdict(int),"G":defaultdict(int)}
     return((D_tail,D_content,D_bpb))
 
-def process_seqs(file_list, D_tail, D_content, D_bpb):
+def process_files(file_list, D_tail, D_content, D_bpb):
     '''Iterate theough the given fastq files and adds the information to the given dictionaries'''
+    def process_open_fastq(openfile, D_tail, D_content, D_bpb):
+        line= openfile.readline()
+        while line:
+            if line[0] == "@":
+                seq= openfile.readline().strip()
+                analyze_sequence(seq, D_tail, D_content, D_bpb)
+                #Skip + line and quality line
+                openfile.readline()
+                openfile.readline()
+            line = openfile.readline()
     for file in file_list:
         extension = file.split('.')[-1]
         if extension == "gz":
-            with gzip.open(file, "rt") as handle:
-                for record in SeqIO.parse(handle, "fastq"):
-                    analyze_sequence(record.seq, D_tail, D_content, D_bpb)
+            with gzip.open(file, "rt") as openfile:
+                process_open_fastq(openfile, D_tail, D_content, D_bpb)
         else:
-            with open(file, "r") as handle:
-                for record in SeqIO.parse(handle, "fastq"):
-                    analyze_sequence(record.seq, D_tail, D_content, D_bpb)
+            with open(file, "r") as openfile:
+                process_open_fastq(openfile, D_tail, D_content, D_bpb)
     return(None)
 
 def dict_to_df(D_tail:dict, D_content:dict, D_bpb_compositional:dict):
@@ -63,10 +71,11 @@ def analyze_sequence(seq, D_tail, D_content, D_bpb):
             continue
         position = seq_len - i
         #Handle Tail
-        if continue_tail and base == tail_base:
-            tail_len += 1
-        else:
-            continue_tail = False
+        if continue_tail:
+            if base == tail_base:
+                tail_len += 1
+            else:
+                continue_tail = False
         #Count content for this sequence
         sequence_conent_D[base] += 1
         #Handle content by position
@@ -101,7 +110,7 @@ def seq_analysis(input, output):
     #Make empty dictionaries
     D_tail, D_content, D_bpb = create_empty_dicts()
     #Process sequences
-    process_seqs(file_list, D_tail, D_content, D_bpb)
+    process_files(file_list, D_tail, D_content, D_bpb)
     #Make dataframe from dictionaries
     output_dataframe = dict_to_df(D_tail, D_content, D_bpb)
     #Normalize the base content by position columns

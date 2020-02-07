@@ -10,7 +10,6 @@ Options:
   --help             Show this message and exit.
   ```
 ### Required packages
-- [Bio](https://biopython.org/wiki/Download)
 - [click](https://pypi.org/project/click/)
 - gzip
 - pandas  
